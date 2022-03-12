@@ -124,7 +124,6 @@ const createBreed = async(name, height_min, height_max, weight_min, weight_max, 
 
 const internalPacker = (arr, dataOrigin = "DB") =>{
     let retrunArr = [];
-    console.log(arr);
     arr.map(d => retrunArr.push({
         id: dataOrigin === "API" ? d.id : `DB${d.id}`,
         name: d.name,

@@ -27,9 +27,12 @@ router.get('/dogs', async(req, res) =>{
 
 router.post('/dog', async(req, res) =>{
     const { name, height_min, height_max, weight_min, weight_max, life_span, temperaments, imgUrl } = req.body;
-    let createdBreed = await createBreed(name, height_min, height_max, weight_min, weight_max, life_span, temperaments, imgUrl);
-    if (createdBreed.error) return res.send({error});
-    res.send(createdBreed);
+    if (name && height_min && height_max && weight_min && weight_max && life_span && temperaments) {
+        let createdBreed = await createBreed(name, height_min, height_max, weight_min, weight_max, life_span, temperaments, imgUrl);
+        if (createdBreed.error) return res.send({error});
+        return res.send(createdBreed);
+    }
+    res.send({error: "There are missing parameters"});
 });
 
 router.get('/dogs/:idRaza', async(req, res) =>{
