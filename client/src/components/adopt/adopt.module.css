@@ -1,0 +1,8 @@
+.container{
+    padding: 25px 10% 30px 10%;
+    display: flex;
+    align-items: center;
+    background-color:#751b65;
+    background-image: url('../../images/bg2.webp');
+    min-height: 560px;
+}

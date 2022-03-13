@@ -1,0 +1,16 @@
+.container{
+    /* border: 1px solid #ffd868; */
+    /* border-radius: 20px; */
+    color: white;
+    display: flex;
+    justify-content: center;
+}
+
+.filterItem{
+    padding: 10px;
+}
+
+.textInput{
+    border-radius: 20px;
+    text-align: center;
+}
