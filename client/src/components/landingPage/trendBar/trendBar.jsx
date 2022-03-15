@@ -13,7 +13,7 @@ import {
     iconTitle
 } from './trendBar.module.css'
 import pawImage from '../../../images/sec.webp'
-import defaultIcon from '../../../images/1.webp'
+import defaultIcon from '../../../images/profileHolder.png'
 
 
 const TrendBar = () =>{
