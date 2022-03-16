@@ -1,16 +1,26 @@
 .container{
     padding: 125px 10% 30px 10%;
-    display: flex;
-    align-items: center;
     background-color:#751b65;
     background-image: url('../../images/bg2.webp');
     min-height: 560px;
     max-height: 680px;
+    display: flex;
 }
 .leftCont{
-    flex-grow: 4;
-    padding-right: 100px;
+    display: flex;
+    align-items: flex-start;
+    flex-direction: column;
+    flex-wrap: wrap;
+    padding-top: 100px;
+    padding-right: 40%;
     /* background-color: red; */
+}
+
+.rightCont{
+    display: flex;
+    align-items: flex-end;
+    justify-content: flex-end;
+    /* background-color: aqua; */
 }
 
 .subTitleBox{
@@ -82,14 +92,6 @@
 .mainBtn:hover{
     background-color: #ffd868;
     color: white;
-}
-
-.rightCont{
-    flex-grow: 6;
-    display: flex;
-    align-items: flex-end;
-    justify-content: flex-end;
-    /* background-color: aqua; */
 }
 
 .mainBanner{
