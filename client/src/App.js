@@ -1,5 +1,5 @@
 import React from 'react';
-import { BrowserRouter, Route } from 'react-router-dom'
+import { Route } from 'react-router-dom'
 import './App.css';
 import About from './components/about/about';
 import Adopt from './components/adopt/adopt';
@@ -13,16 +13,14 @@ import Landing from './components/landingPage/landing';
 function App() {
   return (
     <div className="App">
-      <BrowserRouter>
-        <Header />
-        <Route path='/' exact component={Landing}/>
-        <Route path='/home' component={Home}/>
-        <Route path='/breed/:id' component={BreedDetails}/>
-        <Route path='/create' component={BreedForm}/>
-        <Route path='/adopt' component={Adopt}/>
-        <Route path='/about' component={About}/>
-        <Footer />
-      </BrowserRouter>
+      <Header />
+      <Route path='/' exact component={Landing}/>
+      <Route path='/home' component={Home}/>
+      <Route path='/breed/:id' component={BreedDetails}/>
+      <Route path='/create' component={BreedForm}/>
+      <Route path='/adopt' component={Adopt}/>
+      <Route path='/about' component={About}/>
+      <Footer />
     </div>
   );
 }

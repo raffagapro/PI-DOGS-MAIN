@@ -3,25 +3,27 @@ import { container, leftPanel, midPanel, profileImg, wrapper, subTitleBox, subTi
 import placeholderImg from '../../../images/profileHolder.png'
 import { Link } from "react-router-dom";
 
-const BreedCard = () =>{
+const BreedCard = ({breed}) =>{
+
+    let firstTemps = breed.temperament.replace(' ', '').split(',');
     return(
         <div className={container}>
             <div className={wrapper}>
                 <div className={leftPanel}>
-                    <img src={placeholderImg} alt="" className={profileImg} />
+                    <img src={breed.img} alt="" className={profileImg} />
                 </div>
                 <div className={midPanel}>
                     <div className={subTitleBox}>
-                        <h5 className={subTitle}>Curious, Playful, Active</h5>
+                        <h5 className={subTitle}>{`${firstTemps[0]}, ${firstTemps[1]}, ${firstTemps[2]}`}</h5>
                     </div>
                     <div>
-                        <h2 className={title}>Siberian Husky</h2>
+                        <h2 className={title}>{breed.name}</h2>
                     </div>
                     <div>
-                        <h2 className={weightText}>(17 - 23kg.)</h2>
+                        <h2 className={weightText}>({breed.weight}kg.)</h2>
                     </div>
                     <div>
-                        <Link to='/breed/255' className={mainBtn}>LEARN MORE</Link>
+                        <Link to={`/breed/${breed.id}`} className={mainBtn}>LEARN MORE</Link>
                     </div>
                 </div>
             </div>

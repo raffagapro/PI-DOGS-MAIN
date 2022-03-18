@@ -1,4 +1,5 @@
-import React from "react";
+import React, { useEffect } from "react";
+import { useDispatch, useSelector } from "react-redux";
 import { Link } from "react-router-dom";
 import {
     container,
@@ -14,9 +15,23 @@ import {
 } from './trendBar.module.css'
 import pawImage from '../../../images/sec.webp'
 import defaultIcon from '../../../images/profileHolder.png'
+import { setChosenFive } from "../../../actions";
 
 
 const TrendBar = () =>{
+    const dispatch = useDispatch();
+    let dogBreeds = useSelector(state => state.breeds);
+    let chosenFive = useSelector(state => state.chosenFive);
+    useEffect(() =>{
+        let chosenFive = [];
+        for (let i = 0; i < 5; i++) {
+            chosenFive.push(Math.floor(Math.random() * 170)+ 1);
+        }
+        dispatch(setChosenFive(chosenFive));
+        console.log(chosenFive);
+        console.log(dogBreeds);
+    }, [dispatch, dogBreeds]);
+
     return(
         <div className={container}>
             <div className={titleCont}>
@@ -25,51 +40,16 @@ const TrendBar = () =>{
                 <h2 className={title}>The Furriest Of The Dogwalk</h2>
             </div>
             <div className={iconCont}>
-
-                <div className={iconItem}>
-                    <div className={thump}>
-                        <Link to='/breed/15'>
-                            <img src={defaultIcon} className={iconImg} alt="" />
-                        </Link>
-                        <h3 className={iconTitle}>Siberian Husky</h3>
+                {(chosenFive.length > 0 && chosenFive.map(el => (
+                    <div className={iconItem} key={dogBreeds[el].id}>
+                        <div className={thump}>
+                            <Link to={`/breed/${dogBreeds[el].id}`}>
+                                <img src={(dogBreeds[el].img ? dogBreeds[el].img : defaultIcon)} className={iconImg} alt="" />
+                            </Link>
+                            <h3 className={iconTitle}>{dogBreeds[el].name}</h3>
+                        </div>
                     </div>
-                </div>
-
-                <div className={iconItem}>
-                    <div className={thump}>
-                        <Link to='/breed/15'>
-                            <img src={defaultIcon} className={iconImg} alt="" />
-                        </Link>
-                        <h3 className={iconTitle}>Siberian Husky</h3>
-                    </div>
-                </div>
-
-                <div className={iconItem}>
-                    <div className={thump}>
-                        <Link to='/breed/15'>
-                            <img src={defaultIcon} className={iconImg} alt="" />
-                        </Link>
-                        <h3 className={iconTitle}>Siberian Husky</h3>
-                    </div>
-                </div>
-
-                <div className={iconItem}>
-                    <div className={thump}>
-                        <Link to='/breed/15'>
-                            <img src={defaultIcon} className={iconImg} alt="" />
-                        </Link>
-                        <h3 className={iconTitle}>Siberian Husky</h3>
-                    </div>
-                </div>
-
-                <div className={iconItem}>
-                    <div className={thump}>
-                        <Link to='/breed/15'>
-                            <img src={defaultIcon} className={iconImg} alt="" />
-                        </Link>
-                        <h3 className={iconTitle}>Siberian Husky</h3>
-                    </div>
-                </div>
+                )))}
             </div>               
         </div>
     );

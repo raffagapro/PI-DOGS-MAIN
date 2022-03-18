@@ -14,8 +14,9 @@ const FilterBar = () =>{
             <div className={filterItem}>
                 <input type="text" name="temp" className={textInput} placeholder={'Temperament'} />   
             </div>
+            {/* Change this to a selector for API or DB */}
             <div className={filterItem}>
-                <input type="text" name="breed" className={textInput} placeholder={'Breed'} />   
+                <input type="text" name="source" className={textInput} placeholder={'Source'} />   
             </div>
             <div className={btnCont}>
                 <span className={searchBtn}>
