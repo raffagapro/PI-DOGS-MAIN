@@ -5,7 +5,8 @@ import { Link } from "react-router-dom";
 
 const BreedCard = ({breed}) =>{
 
-    let firstTemps = breed.temperament.replace(' ', '').split(',');
+    let firstTemps = breed.temperament ? breed.temperament.replace(' ', '').split(',') : 'Good Boy';
+    
     return(
         <div className={container}>
             <div className={wrapper}>

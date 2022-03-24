@@ -4,31 +4,3 @@
     margin-top: 0;
     min-height: 560px;
 }
-
-.paginator{
-    display: flex;
-    margin: 30px;
-    justify-content: center;
-    padding-bottom: 20px;
-
-}
-
-.paginationText{
-    color: #ffd868;
-    font-size: 18px;
-}
-.searchBtn{
-    height: 20px;
-    margin-left: 10px;
-    margin-right: 10px;
-    cursor: pointer;
-}
-
-.searchBtn:hover{
-    height: 25px;
-}
-
-.btnIcon{
-    height: auto;
-    height: 18px;
-}

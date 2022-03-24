@@ -1,4 +1,4 @@
-import React, { useEffect } from "react";
+import React, { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { Link } from "react-router-dom";
 import {
@@ -15,22 +15,32 @@ import {
 } from './trendBar.module.css'
 import pawImage from '../../../images/sec.webp'
 import defaultIcon from '../../../images/profileHolder.png'
-import { setChosenFive } from "../../../actions";
+// import { setChosenFive } from "../../../actions";
 
 
 const TrendBar = () =>{
     const dispatch = useDispatch();
     let dogBreeds = useSelector(state => state.breeds);
-    let chosenFive = useSelector(state => state.chosenFive);
+
+    // let chosenFive = useSelector(state => state.chosenFive);
+    // useEffect(() =>{
+    //     let chosenFivez = [];
+    //     for (let i = 0; i < 5; i++) {
+    //         chosenFivez.push(Math.floor(Math.random() * 170)+ 1);
+    //     }
+    //     dispatch(setChosenFive(chosenFivez));
+    //     console.log(chosenFivez);
+    //     console.log(dogBreeds);
+    // }, [dispatch, dogBreeds]);
+
+    const [chosenFivez, setChosenFivez] = useState([]);
+    
     useEffect(() =>{
-        let chosenFive = [];
+        setChosenFivez([]);
         for (let i = 0; i < 5; i++) {
-            chosenFive.push(Math.floor(Math.random() * 170)+ 1);
+            setChosenFivez(prevState => [...prevState, Math.floor(Math.random() * 170)+ 1]);
         }
-        dispatch(setChosenFive(chosenFive));
-        console.log(chosenFive);
-        console.log(dogBreeds);
-    }, [dispatch, dogBreeds]);
+    }, []);
 
     return(
         <div className={container}>
@@ -40,7 +50,7 @@ const TrendBar = () =>{
                 <h2 className={title}>The Furriest Of The Dogwalk</h2>
             </div>
             <div className={iconCont}>
-                {(chosenFive.length > 0 && chosenFive.map(el => (
+                {(chosenFivez.length > 0 && chosenFivez.map(el => (
                     <div className={iconItem} key={dogBreeds[el].id}>
                         <div className={thump}>
                             <Link to={`/breed/${dogBreeds[el].id}`}>

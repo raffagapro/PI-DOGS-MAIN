@@ -1,39 +1,42 @@
-import React from "react";
+import React, { useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
+import NoDog from "../noDog/noDog";
 import BreedCard from "./breedCard/breedCard";
 import FilterBar from "./filterBar/filterBar";
-import { container, searchBtn, btnIcon, paginator, paginationText } from './home.module.css'
-import backIcon from '../../images/backIcon.png';
-import forwardIcon from '../../images/forwardIcon.png';
+import { container } from './home.module.css'
+import Paginator from "./paginator/paginator";
 
 
 const Home = () =>{
     const dispatch = useDispatch();
-    let dogBreeds = useSelector(state => state.breeds);
+    let dogBreeds = useSelector(state => state.results);
+
+    
+    const [ currentPage, setCurrentPage ] = useState(1);
+    const resultsPerPage = 8;
+    const resultsEnd = currentPage * resultsPerPage;// 22*8 = 176
+    const resultsStart = resultsEnd - resultsPerPage;//176-8 = 168
+    const results =  !dogBreeds.error ? dogBreeds.slice(resultsStart, resultsEnd): null
+
+    const onPageSelect = page => setCurrentPage(page);
 
     return(
         <>
             <div className={container}>
                 <FilterBar/>
-
-                <BreedCard breed={dogBreeds[0]} />
-                <BreedCard breed={dogBreeds[1]} />
-                <BreedCard breed={dogBreeds[2]} />
-                <BreedCard breed={dogBreeds[3]} />
-                <BreedCard breed={dogBreeds[4]} />
-                <BreedCard breed={dogBreeds[5]} />
-                <BreedCard breed={dogBreeds[6]} />
-                <BreedCard breed={dogBreeds[7]} />
-
-                <div className={paginator}>
-                    <span className={searchBtn}>
-                        <img src={backIcon} className={btnIcon} alt="" />
-                    </span>
-                    <small className={paginationText}>Page 1, 2, 3, 4, 5  </small>
-                    <span className={searchBtn}>
-                        <img src={forwardIcon} className={btnIcon} alt="" />
-                    </span>
-                </div>
+                {
+                    dogBreeds.length > 0 && !dogBreeds.error ?
+                    results.map(b =>(
+                        // <h1>{b.temperament}</h1>
+                        <BreedCard key={b.id} breed={b} />
+                    )):
+                    <NoDog />
+                }
+                {
+                    !dogBreeds.error ?
+                    <Paginator onPageSelect={onPageSelect} currentPage={currentPage} numPages={Math.ceil(dogBreeds.length/8)} />
+                    : null
+                }
             </div>
         </>
     );

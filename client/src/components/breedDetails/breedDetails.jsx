@@ -1,4 +1,6 @@
-import React from "react";
+import React, { useEffect } from "react";
+import { useDispatch, useSelector } from "react-redux";
+import { useParams } from "react-router-dom";
 import TrendBar from '../landingPage/trendBar/trendBar'
 import { container, leftPanel, rightPanel,subTitleBox, subTitle, title, attText, iconStyle, profileSyle } from './breedDetails.module.css'
 import profilePhoto from '../../images/largePlaceholrde.webp'
@@ -6,36 +8,45 @@ import weightIcon from '../../images/weightIcon.png'
 import heightIcon from '../../images/heightIcon.png'
 import lifeIcon from '../../images/lifespanIcon.png'
 import tempIcon from '../../images/temperamentIcon.png'
+import { getBreedById } from "../../actions";
 
 const BreedDetails = () =>{
+    const dispatch = useDispatch();
+    const { id } = useParams();
+    let dogBreed = useSelector(state => state.invBreed);
+    useEffect(() =>{
+        dispatch(getBreedById(id));
+    }, [dispatch]);
+    let firstTemps = dogBreed.temperament ? dogBreed.temperament.replace(' ', '').split(',') : 'Good Boy';
+
     return(
         <>
             <div className={container}>
                 <div className={leftPanel}>
-                    <img src={profilePhoto} alt="" className={profileSyle} />
+                    <img src={dogBreed.img ? dogBreed.img : profilePhoto} alt="" className={profileSyle} />
                 </div>
                 <div className={rightPanel}>
                     <div className={subTitleBox}>
-                        <h5 className={subTitle}>Curious, Playful, Active</h5>
+                        <h5 className={subTitle}>{`${firstTemps[0]}, ${firstTemps[1]}, ${firstTemps[2]}`}</h5>
                     </div>
                     <div>
-                        <h2 className={title}>Siberian Husky</h2>
+                        <h2 className={title}>{dogBreed.name}</h2>
                     </div>
                     <div>
-                        <h2 className={attText}><img src={weightIcon} className={iconStyle} alt="" /> 17 - 23 kg</h2>
+                        <h2 className={attText}><img src={weightIcon} className={iconStyle} alt="" />{` ${dogBreed.weight} kg`}</h2>
                     </div>
                     <div>
-                        <h2 className={attText}><img src={heightIcon} className={iconStyle} alt="" /> 58 - 66cm</h2>
+                        <h2 className={attText}><img src={heightIcon} className={iconStyle} alt="" />{` ${dogBreed.height} cm`}</h2>
                     </div>
                     <div>
-                        <h2 className={attText}><img src={lifeIcon} className={iconStyle} alt="" /> 12 years</h2>
+                        <h2 className={attText}><img src={lifeIcon} className={iconStyle} alt="" /> {dogBreed.life_span}</h2>
                     </div>
                     <div>
-                        <h2 className={attText}><img src={tempIcon} className={iconStyle} alt="" /> Curios, Playful, Active, Outgoing, Friendly, Alert, Gentle, Intelligent</h2>
+                        <h2 className={attText}><img src={tempIcon} className={iconStyle} alt="" /> {dogBreed.temperament}</h2>
                     </div>
                 </div>
             </div>
-            <TrendBar/>
+            {/* <TrendBar/> */}
         </>
     );
 }

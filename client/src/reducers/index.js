@@ -8,14 +8,21 @@ import {
     FILTER_BREEDS_BY_SOURCE,
     SORT_BREEDS_BY_AZ,
     SORT_BREEDS_BY_WEIGHT,
-    SET_CHOSEN_FIVE
+    SET_CHOSEN_FIVE,
+    CLEAR_FILTERS
 } from '../actions';
 
 const initialState = {
     breeds: [],
+    results: [],
     invBreed: [],
     temps: [],
-    chosenFive: []
+    chosenFive: [],
+    temp: null,
+    source: null,
+    keyword: null,
+    wSort: 'wu',
+    nSort: 'az'
 }
 
 const rootReducer = (state = initialState, action) =>{
@@ -23,13 +30,15 @@ const rootReducer = (state = initialState, action) =>{
         case GET_ALL_BREEDS:
             return{
                 ...state,
-                breeds: action.payload
+                breeds: action.payload,
+                results: action.payload
             }
 
         case GET_BREED_BY_NAME:
             return{
                 ...state,
-                breeds: action.payload
+                results: action.payload[0],
+                keyword: action.payload[1]
             }
         
         case GET_BREED_BY_ID:
@@ -51,56 +60,92 @@ const rootReducer = (state = initialState, action) =>{
             }
         
         case FILTER_BREEDS_BY_TEMP:
-            const filteredBreeds = state.breeds.filter(b => b.temperament.includes(action.payload));
+            let filteredBreeds = state.breeds;
+            if (state.keyword) filteredBreeds = filteredBreeds.filter(b => b.name.includes(state.keyword.charAt(0).toUpperCase() + state.keyword.slice(1)));
+            filteredBreeds = filteredBreeds.filter(b => {
+                if (!b.temperament) return false;
+                return b.temperament.includes(action.payload)
+            });
+            if (state.source) {
+                filteredBreeds = filteredBreeds.filter(b =>{
+                    if (state.source === 'DB') return b.id.toString().includes('DB');
+                    else return !b.id.toString().includes('DB');
+                });
+            }
             return{
                 ...state,
-                breeds: filteredBreeds
+                results: filteredBreeds,
+                temp: action.payload
             }
 
         case FILTER_BREEDS_BY_SOURCE:
-            const filteredBreedz = state.breeds.filter(b => b.temperament.id(action.payload));
+            let filteredBreedz = state.breeds;
+            if (state.keyword) filteredBreedz = filteredBreedz.filter(b => b.name.includes(state.keyword.charAt(0).toUpperCase() + state.keyword.slice(1)));
+            filteredBreedz = filteredBreedz.filter(b => {
+                if (action.payload === 'DB') return b.id.toString().includes('DB');
+                else return !b.id.toString().includes('DB');
+            });
+            if (state.temp) {
+                filteredBreedz = filteredBreedz.filter(b =>{
+                    if (!b.temperament) return false;
+                    return b.temperament.includes(state.temp)
+                });
+            }
             return{
                 ...state,
-                breeds: filteredBreedz
+                results: filteredBreedz,
+                source: action.payload
             }
 
         case SORT_BREEDS_BY_AZ:
             const sortedBreeds = action.payload === 'az' ?
-                state.breeds.sort((a, b) =>{
+                state.results.sort((a, b) =>{
                     if (a.name > b.name) return 1;
                     if (b.name > a.name) return -1;
                     return 0;
                 }):
-                state.breeds.sort((a, b) =>{
+                state.results.sort((a, b) =>{
                     if (a.name > b.name) return -1;
                     if (b.name > a.name) return 1;
                     return 0;
                 });
+                console.log('REDUCER:');
+                console.log(sortedBreeds);
             return{
                 ...state,
-                breeds: sortedBreeds
+                results: sortedBreeds,
+                nSort: action.payload
             }
         
         case SORT_BREEDS_BY_WEIGHT:
             const sortedBreedz = action.payload === 'wu' ?
-                state.breeds.sort((a, b) =>{
+                state.results.sort((a, b) =>{
                     let aW = a.weight.replaceAll(" ", "").split("-");
                     let bW = b.weight.replaceAll(" ", "").split("-");
                     return bW[0] - aW[0];
                 }):
-                state.breeds.sort((a, b) =>{
+                state.results.sort((a, b) =>{
                     let aW = a.weight.replaceAll(" ", "").split("-");
                     let bW = b.weight.replaceAll(" ", "").split("-");
                     return aW[0] - bW[0];
                 });
             return{
                 ...state,
-                breeds: sortedBreedz
+                results: sortedBreedz,
+                wSort: action.payload
             }
         case SET_CHOSEN_FIVE:
             return{
                 ...state,
                 chosenFive: action.payload
+            }
+        
+        case CLEAR_FILTERS:
+            return{
+                ...state,
+                temp: null,
+                source: null,
+                keyword: null
             }
     
         default:
