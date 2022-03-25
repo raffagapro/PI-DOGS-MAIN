@@ -12,7 +12,7 @@ const Header = () =>{
                 </div>
                 <div className={linksCont}>
                     <NavLink to='/home' className={linkItem} activeClassName={active}>HOME</NavLink>
-                    <NavLink to={`/breed/${Math.floor(Math.random() * 170)+ 1}`} className={linkItem} activeClassName={active} >DOG OF THE DAY</NavLink>
+                    <NavLink to={`/breed/${Math.floor(Math.random() * 170)+ 1}`} className={linkItem} activeClassName={active}>DOG OF THE DAY</NavLink>
                     <NavLink to='/adopt' className={linkItem} activeClassName={active}>ADOPT</NavLink>
                     <NavLink to='/about' className={linkItem} activeClassName={active}>ABOUT</NavLink>
                 </div>

@@ -25,8 +25,6 @@ const FilterBar = () =>{
     const [temp, setTemp] = useState('');
     const [source, setSource] = useState('');
     const [search, setSearch] = useState('');
-    // const [wSort, setWSort] = useState('wu');
-    // const [nSort, setNSort] = useState('az');
 
     let searchKey = useSelector(state => state.keyword);
     let temps = useSelector(state => state.temps);
@@ -60,7 +58,8 @@ const FilterBar = () =>{
         dispatch(getBreedByName(search));
     }
     const sortHelper = (sort, dir) =>{
-        if (sort === 'az') dispatch(sortBreedsByAz(dir));
+        console.log(sort, dir);
+        if (sort === 'name') dispatch(sortBreedsByAz(dir));
         else dispatch(sortBreedsByWeight(dir));
     }
     return(
@@ -101,15 +100,15 @@ const FilterBar = () =>{
                 <span className={searchBtn}>
                     {
                         wSort === 'wu'?
-                        <img src={weightDown} className={btnIcon} alt="" onClick={() => sortHelper('ws', 'wd')} />:
-                        <img src={weightUp} className={btnIcon} alt="" onClick={() => sortHelper('ws', 'wp')} />
+                        <img src={weightDown} className={btnIcon} alt="" onClick={() => sortHelper('weight', 'wd')} />:
+                        <img src={weightUp} className={btnIcon} alt="" onClick={() => sortHelper('weight', 'wu')} />
                     }
                 </span>
                 <span className={searchBtn}>
                     {
                         nSort === 'az'?
-                        <img src={azUp} className={btnIcon} alt="" onClick={() => sortHelper('az', 'za')} />:
-                        <img src={azDown} className={btnIcon} alt="" onClick={() => sortHelper('az', 'az')} />
+                        <img src={azUp} className={btnIcon} alt="" onClick={() => sortHelper('name', 'za')} />:
+                        <img src={azDown} className={btnIcon} alt="" onClick={() => sortHelper('name', 'az')} />
                     }
                 </span>
                 <Link to='/create' className={searchBtn}>

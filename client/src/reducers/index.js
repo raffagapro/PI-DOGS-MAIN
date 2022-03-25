@@ -98,19 +98,17 @@ const rootReducer = (state = initialState, action) =>{
             }
 
         case SORT_BREEDS_BY_AZ:
-            const sortedBreeds = action.payload === 'az' ?
-                state.results.sort((a, b) =>{
+            let sortedBreeds = action.payload === 'az' ?
+                state.results.slice().sort((a, b) =>{
                     if (a.name > b.name) return 1;
-                    if (b.name > a.name) return -1;
+                    if (a.name < b.name) return -1;
                     return 0;
                 }):
-                state.results.sort((a, b) =>{
+                state.results.slice().sort((a, b) =>{
                     if (a.name > b.name) return -1;
-                    if (b.name > a.name) return 1;
+                    if (a.name < b.name) return 1;
                     return 0;
                 });
-                console.log('REDUCER:');
-                console.log(sortedBreeds);
             return{
                 ...state,
                 results: sortedBreeds,
@@ -119,12 +117,12 @@ const rootReducer = (state = initialState, action) =>{
         
         case SORT_BREEDS_BY_WEIGHT:
             const sortedBreedz = action.payload === 'wu' ?
-                state.results.sort((a, b) =>{
+                state.results.slice().sort((a, b) =>{
                     let aW = a.weight.replaceAll(" ", "").split("-");
                     let bW = b.weight.replaceAll(" ", "").split("-");
                     return bW[0] - aW[0];
                 }):
-                state.results.sort((a, b) =>{
+                state.results.slice().sort((a, b) =>{
                     let aW = a.weight.replaceAll(" ", "").split("-");
                     let bW = b.weight.replaceAll(" ", "").split("-");
                     return aW[0] - bW[0];
@@ -134,6 +132,7 @@ const rootReducer = (state = initialState, action) =>{
                 results: sortedBreedz,
                 wSort: action.payload
             }
+
         case SET_CHOSEN_FIVE:
             return{
                 ...state,

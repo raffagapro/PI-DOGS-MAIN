@@ -6,8 +6,8 @@ export const GET_TEMPS = 'GET_TEMPS';
 export const CREATE_BREED = 'CREATE_BREED';
 export const FILTER_BREEDS_BY_TEMP = 'FILTER_BREEDS_BY_TEMP';
 export const FILTER_BREEDS_BY_SOURCE = 'FILTER_BREEDS_BY_SOURCE';
-export const SORT_BREEDS_BY_AZ = 'SORT_BREEDS_BY_AZ_ASC';
-export const SORT_BREEDS_BY_WEIGHT = 'SORT_BREEDS_BY_AZ_ASC';
+export const SORT_BREEDS_BY_AZ = 'SORT_BREEDS_BY_AZ';
+export const SORT_BREEDS_BY_WEIGHT = 'SORT_BREEDS_BY_WEIGHT';
 export const SET_CHOSEN_FIVE = 'SET_CHOSEN_FIVE';
 export const CLEAR_FILTERS = 'CLEAR_FILTERS';
 
@@ -80,7 +80,7 @@ export const createBreed = payload =>{
 
 //payload = temperament name string
 export const filterBreedsByTemp = payload =>{
-    return async dispatch =>{
+    return dispatch =>{
         return dispatch({
             type: FILTER_BREEDS_BY_TEMP,
             payload
@@ -90,7 +90,7 @@ export const filterBreedsByTemp = payload =>{
 
 //payload = resource = 'DB' or 'API'
 export const filterBreedsBySource = payload =>{
-    return async dispatch =>{
+    return dispatch =>{
         return dispatch({
             type: FILTER_BREEDS_BY_SOURCE,
             payload
@@ -99,7 +99,7 @@ export const filterBreedsBySource = payload =>{
 }
 
 export const clearFilters = payload =>{
-    return async dispatch =>{
+    return dispatch =>{
         return dispatch({
             type: CLEAR_FILTERS,
             payload
@@ -109,9 +109,7 @@ export const clearFilters = payload =>{
 
 //payload = 'az' or 'za'
 export const sortBreedsByAz = payload =>{
-    return async dispatch =>{
-        console.log('ACTIONS:');
-        console.log(payload)
+    return dispatch =>{
         return dispatch({
             type: SORT_BREEDS_BY_AZ,
             payload
@@ -121,9 +119,7 @@ export const sortBreedsByAz = payload =>{
 
 //payload = 'wu' or 'wd'
 export const sortBreedsByWeight = payload =>{
-    return async dispatch =>{
-        console.log('ACTIONS:');
-        console.log(payload)
+    return dispatch =>{
         return dispatch({
             type: SORT_BREEDS_BY_WEIGHT,
             payload
