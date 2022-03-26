@@ -26,10 +26,12 @@ router.get('/dogs', async(req, res) =>{
 });
 
 router.post('/dog', async(req, res) =>{
-    const { name, height_min, height_max, weight_min, weight_max, life_span, temperaments, imgUrl } = req.body;
-    if (name && height_min && height_max && weight_min && weight_max && life_span && temperaments) {
-        let createdBreed = await createBreed(name, height_min, height_max, weight_min, weight_max, life_span, temperaments, imgUrl);
-        if (createdBreed.error) return res.send({error});
+    const { name, height_min, height_max, weight_min, weight_max, lifespan_min, lifespan_max, temperaments, imgUrl } = req.body;
+    console.log(req.body);
+    if (name && height_min && height_max && weight_min && weight_max && lifespan_min && lifespan_max) {
+        console.log('entro');
+        let createdBreed = await createBreed(name, height_min, height_max, weight_min, weight_max, lifespan_min, lifespan_max, temperaments, imgUrl);
+        if (createdBreed.error) return res.send({error: createdBreed.error});
         return res.send(createdBreed);
     }
     res.send({error: "There are missing parameters"});

@@ -66,13 +66,24 @@ export const getTemps = () =>{
 }
 
 export const createBreed = payload =>{
+    const breedPackage = {
+        name: payload.name,
+        height_min: payload.minHeight,
+        height_max: payload.maxHeight,
+        weight_min: payload.minWeight,
+        weight_max: payload.maxWeight,
+        lifespan_min: payload.minLifeSpan,
+        lifespan_max: payload.maxLifeSpan,
+        imgUrl: payload.imgUrl,
+        temperament: payload.temperament,
+    }
     try {
         return async dispatch =>{
-            var result = await axios.post(`${SERVER_URL}/dog`, payload);
-            console.log(result);
+            var { data } = await axios.post(`${SERVER_URL}/dog`, breedPackage);
+            console.log(data);
             return dispatch({
                 type: CREATE_BREED,
-                payload: result 
+                payload: data 
             });
         }
     } catch (e) { console.log(e); }

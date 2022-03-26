@@ -60,6 +60,12 @@ h2, h5{
 .inputCont{
     padding: 10px;
 }
+.errorBadge{
+    display: flex;
+    justify-content: flex-end;
+    color:#ffd868;
+    cursor: pointer;
+}
 
 .textInput{
     color: #ffd868;
@@ -136,6 +142,27 @@ hr{
     cursor: pointer;
     align-self: flex-end;
 }
+.mainBtnDisabled{
+    font-size: 20px;
+    height: 60px;
+    line-height: 46px;
+    width: 50%;
+    background-color: grey;
+    color: white;
+    border: none;
+    border-radius: 20px;
+    display: inline-block;
+    font-weight: 800;
+    letter-spacing: 0.3px;
+    padding: 0 10px;
+    position: relative;
+    text-transform: uppercase;
+    text-align: center;
+    text-decoration: none;
+    z-index: 3;
+    cursor: pointer;
+    align-self: flex-end;
+}
 .mainBtn:before{
     border: 2px solid #ffd868;
     border-radius: 20px;
@@ -183,7 +210,10 @@ hr{
     width: 99%;
     z-index: -1;
 }
-
+.errorCont{
+    display: flex;
+    justify-content: flex-end;
+}
 .tempBtn:hover{
     color:#ffd868;
     background-color: transparent;

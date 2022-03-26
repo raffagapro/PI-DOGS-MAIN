@@ -95,7 +95,7 @@ const getTempList = async() =>{
     return tempList;
 }
 
-const createBreed = async(name, height_min, height_max, weight_min, weight_max, life_span, temperaments, imgUrl) =>{
+const createBreed = async(name, height_min, height_max, weight_min, weight_max, lifespan_min, lifespan_max, temperaments, imgUrl) =>{
     let error = null;
     let apiObjs = await apiSearch(name);
     if (apiObjs > 0) {
@@ -105,20 +105,28 @@ const createBreed = async(name, height_min, height_max, weight_min, weight_max, 
         });
         if (error) return error;
     }
+    let wlife = null;
+    if (lifespan_min && lifespan_max) wlife = `${lifespan_min} - ${lifespan_max}`;
     //checks DB for name
     let [createBreed, created] = await Dog.findOrCreate({
         where:{ name },
         defaults:{
             height: `${height_min} - ${height_max}`,
             weight: `${weight_min} - ${weight_max}`,
-            life_span,
+            life_span: wlife,
             imgUrl
         }
     });
     //if name already exist
     if (!created) return {error: 'The name of the breed is already in use, or the breed already exists!'};
     //if breed was created add the temps
-    await createBreed.addTemperament(temperaments);
+    if (temperaments) {
+        temperaments.forEach(async temp => {
+            await createBreed.addTemperament(await Temperament.find({
+                where:{ name: temp.toLowerCase() }
+            }));
+        });
+    }
     return createBreed;
 }
 
