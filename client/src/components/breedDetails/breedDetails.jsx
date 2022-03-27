@@ -9,6 +9,7 @@ import heightIcon from '../../images/heightIcon.png'
 import lifeIcon from '../../images/lifespanIcon.png'
 import tempIcon from '../../images/temperamentIcon.png'
 import { getBreedById } from "../../actions";
+import NoDog from "../noDog/noDog";
 
 const BreedDetails = () =>{
     const dispatch = useDispatch();
@@ -17,35 +18,43 @@ const BreedDetails = () =>{
     useEffect(() =>{
         dispatch(getBreedById(id));
     }, [dispatch]);
-    let firstTemps = dogBreed.temperament ? dogBreed.temperament.replace(' ', '').split(',') : 'Good Boy';
+
+    let firstTemps = dogBreed.temperament ? dogBreed.temperament.replace(' ', '').split(',') : 'Gentle';
 
     return(
         <>
-            <div className={container}>
-                <div className={leftPanel}>
-                    <img src={dogBreed.img ? dogBreed.img : profilePhoto} alt="" className={profileSyle} />
+            {
+                !dogBreed ? <div className={container}><NoDog/></div> :
+                <div className={container}>
+                    <div className={leftPanel}>
+                        <img src={dogBreed.img && !dogBreed.img.includes('undefined') ? dogBreed.img : profilePhoto} alt="" className={profileSyle} />
+                    </div>
+                    <div className={rightPanel}>
+                        <div className={subTitleBox}>
+                            <h5 className={subTitle}>{
+                                firstTemps === 'Gentle'?
+                                'Gentle' :
+                                `${firstTemps[0]}, ${firstTemps[1]}, ${firstTemps[2]}`
+                            }</h5>
+                        </div>
+                        <div>
+                            <h2 className={title}>{dogBreed.name}</h2>
+                        </div>
+                        <div>
+                            <h2 className={attText}><img src={weightIcon} className={iconStyle} alt="" />{` ${dogBreed.weight} kg`}</h2>
+                        </div>
+                        <div>
+                            <h2 className={attText}><img src={heightIcon} className={iconStyle} alt="" />{` ${dogBreed.height} cm`}</h2>
+                        </div>
+                        <div>
+                            <h2 className={attText}><img src={lifeIcon} className={iconStyle} alt="" /> {dogBreed.life_span}</h2>
+                        </div>
+                        <div>
+                            <h2 className={attText}><img src={tempIcon} className={iconStyle} alt="" /> {dogBreed.temperament ? dogBreed.temperament : 'Good Boy'}</h2>
+                        </div>
+                    </div>
                 </div>
-                <div className={rightPanel}>
-                    <div className={subTitleBox}>
-                        <h5 className={subTitle}>{`${firstTemps[0]}, ${firstTemps[1]}, ${firstTemps[2]}`}</h5>
-                    </div>
-                    <div>
-                        <h2 className={title}>{dogBreed.name}</h2>
-                    </div>
-                    <div>
-                        <h2 className={attText}><img src={weightIcon} className={iconStyle} alt="" />{` ${dogBreed.weight} kg`}</h2>
-                    </div>
-                    <div>
-                        <h2 className={attText}><img src={heightIcon} className={iconStyle} alt="" />{` ${dogBreed.height} cm`}</h2>
-                    </div>
-                    <div>
-                        <h2 className={attText}><img src={lifeIcon} className={iconStyle} alt="" /> {dogBreed.life_span}</h2>
-                    </div>
-                    <div>
-                        <h2 className={attText}><img src={tempIcon} className={iconStyle} alt="" /> {dogBreed.temperament}</h2>
-                    </div>
-                </div>
-            </div>
+            }
             {/* <TrendBar/> */}
         </>
     );

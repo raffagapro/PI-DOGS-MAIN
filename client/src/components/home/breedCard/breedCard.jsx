@@ -5,17 +5,21 @@ import { Link } from "react-router-dom";
 
 const BreedCard = ({breed}) =>{
 
-    let firstTemps = breed.temperament ? breed.temperament.replace(' ', '').split(',') : 'Good Boy';
+    let firstTemps = breed.temperament ? breed.temperament.replace(' ', '').split(',') : 'Gentle';
     
     return(
         <div className={container}>
             <div className={wrapper}>
                 <div className={leftPanel}>
-                    <img src={breed.img} alt="" className={profileImg} />
+                    <img src={breed.img.includes('undefine') ? placeholderImg : breed.img} alt="" className={profileImg} />
                 </div>
                 <div className={midPanel}>
                     <div className={subTitleBox}>
-                        <h5 className={subTitle}>{`${firstTemps[0]}, ${firstTemps[1]}, ${firstTemps[2]}`}</h5>
+                        <h5 className={subTitle}>{
+                            firstTemps === 'Gentle'?
+                            'Gentle' :
+                            `${firstTemps[0]}, ${firstTemps[1]}, ${firstTemps[2]}`
+                        }</h5>
                     </div>
                     <div>
                         <h2 className={title}>{breed.name}</h2>

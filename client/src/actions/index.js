@@ -80,7 +80,6 @@ export const createBreed = payload =>{
     try {
         return async dispatch =>{
             var { data } = await axios.post(`${SERVER_URL}/dog`, breedPackage);
-            console.log(data);
             return dispatch({
                 type: CREATE_BREED,
                 payload: data 

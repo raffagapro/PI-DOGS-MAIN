@@ -61,6 +61,7 @@ const FilterBar = () =>{
         console.log(sort, dir);
         if (sort === 'name') dispatch(sortBreedsByAz(dir));
         else dispatch(sortBreedsByWeight(dir));
+    
     }
     return(
         <form onSubmit={e =>{ e.preventDefault(); searchHandler();}} className={container}>

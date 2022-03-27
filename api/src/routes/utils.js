@@ -38,7 +38,6 @@ const dbSearch = async(value) =>{
         },
         include: Temperament
     });
-    // console.log(dbResult);
     return internalPacker(dbResult);
 }
 
@@ -55,10 +54,10 @@ const getBreedByID = async(id) =>{
     let foundBreed = false;
     //checks to see if the id comes from the DB
     if (id.includes('DB')) {
-        id = id.replace("DB", "");
+        // id = id.replace("DB", "");
         let listDB = await dbInfo();
         listDB.forEach(e => {
-            if (e.id === parseInt(id)) foundBreed = e;
+            if (e.id === id) foundBreed = e;
         });
     }else{
         let listAPI = await apiInfo();
@@ -108,6 +107,7 @@ const createBreed = async(name, height_min, height_max, weight_min, weight_max, 
     let wlife = null;
     if (lifespan_min && lifespan_max) wlife = `${lifespan_min} - ${lifespan_max}`;
     //checks DB for name
+    name = name.toLowerCase();
     let [createBreed, created] = await Dog.findOrCreate({
         where:{ name },
         defaults:{

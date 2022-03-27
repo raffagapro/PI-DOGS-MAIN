@@ -160,7 +160,6 @@ hr{
     text-align: center;
     text-decoration: none;
     z-index: 3;
-    cursor: pointer;
     align-self: flex-end;
 }
 .mainBtn:before{

@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
+import { useHistory } from "react-router-dom";
 import { createBreed, getTemps } from '../../actions'
 import {
     container,
@@ -25,6 +26,7 @@ import {
 
 const BreedForm = () =>{
     const dispatch = useDispatch();
+    const history = useHistory()
     const temps = useSelector(state => state.temps);
     const [input, setInput] = useState({
         name: '',
@@ -40,6 +42,8 @@ const BreedForm = () =>{
     const [tempInput, setTempInput] = useState('');
     const [inputErrors, setInputErrors] = useState({});
     const [btnDisable, setBtnDisable] = useState(true);
+    const [bError, setBError] = useState(null);
+    const invBreed = useSelector(state => state.invBreed);
 
     useEffect(() =>{
         if (temps.length < 1) dispatch(getTemps());
@@ -86,8 +90,10 @@ const BreedForm = () =>{
     }
     const onSubmitHandler = e =>{
         e.preventDefault();
-        if (Object.keys(inputErrors).length > 0) return;
+        if (Object.keys(inputErrors).length > 0 || input.name === '') return;
         dispatch(createBreed(input));
+        if (invBreed.error) setBError(invBreed.error);
+        else history.push(`/breed/DB${invBreed.id}`);
     }
 
     return(
@@ -155,9 +161,6 @@ const BreedForm = () =>{
                     </select>
                     <span className={tempBtn + ' ' + leftMar} onClick={addTempHandler}>Add Temperament</span>
                 </div>
-                {/* <div style={{ marginBottom: '10px' }}>
-                    {inputErrors.temperaments ? <span className={errorBadge}>{inputErrors.temperaments}*</span> : null}
-                </div> */}
                 <hr />
                 <div className={tempCont}>
                     <p className={tempsBadges}>
@@ -172,6 +175,10 @@ const BreedForm = () =>{
                 </div>
                 <div className={btnCont}>
                     <button className={btnDisable ? mainBtnDisabled : mainBtn}>CREATE BREED</button>
+                </div>
+                {/* BACKEND ERRO */}
+                <div style={{ marginTop: '10px' }}>
+                    {bError ? <span className={errorBadge}>{bError}*</span> : null}
                 </div>
             </form>
         </div>
